@@ -1,0 +1,74 @@
+<div class="container">
+  <div class="header-row">
+    <h1>Liste des chefs</h1>
+
+    <a routerLink="/chef/add" class="add-btn">
+      Ajouter un chef
+    </a>
+  </div>
+
+  <div class="stats" *ngIf="stats$ | async as stats">
+    <div>
+      <strong>{{ stats.nombre }}</strong>
+      <span>chefs</span>
+    </div>
+
+    <div>
+      <strong>{{ stats.experienceMoyenne | number:'1.1-1' }}</strong>
+      <span>années d'expérience moyenne</span>
+    </div>
+
+    <div *ngIf="stats.chefPlusExperimente">
+      <strong>{{ stats.chefPlusExperimente.fullName }}</strong>
+      <span>chef le plus expérimenté</span>
+    </div>
+  </div>
+
+  <div class="filters">
+    <input
+      type="text"
+      placeholder="Rechercher par nom..."
+      [(ngModel)]="recherche"
+    />
+
+    <select [(ngModel)]="specialite">
+      <option value="">Toutes les spécialités</option>
+      <option
+        *ngFor="let spec of specialities$ | async"
+        [value]="spec"
+      >
+        {{ spec }}
+      </option>
+    </select>
+
+    <select [(ngModel)]="triExperience" (change)="changerTri()">
+      <option value="">Trier par expérience</option>
+      <option value="asc">Expérience croissante</option>
+      <option value="desc">Expérience décroissante</option>
+    </select>
+  </div>
+
+  <div class="cards">
+    <div
+      class="card"
+      *ngFor="let chef of (chefs$ | async) | filtreChefs:recherche:specialite"
+      [routerLink]="['/chef', chef.id]"
+    >
+      <img [src]="chef.photo" [alt]="chef.fullName" />
+
+      <div class="card-body">
+        <span class="badge">{{ chef.experienceYears | niveau }}</span>
+
+        <h2>{{ chef.fullName }}</h2>
+
+        <p class="speciality">
+          {{ chef.speciality }}
+        </p>
+
+        <p>
+          {{ chef.experienceYears }} années d'expérience
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

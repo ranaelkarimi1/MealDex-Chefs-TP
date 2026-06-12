@@ -1,0 +1,48 @@
+<div class="container" *ngIf="chef$ | async as chef">
+  <button class="back-btn" routerLink="/chefs">
+    ← Retour
+  </button>
+
+  <div class="detail-card">
+    <img [src]="chef.photo" [alt]="chef.fullName" />
+
+    <div class="info">
+      <span class="badge">{{ chef.experienceYears | niveau }}</span>
+
+      <h1>{{ chef.fullName }}</h1>
+
+      <h3>{{ chef.speciality }}</h3>
+
+      <p>
+        <strong>Expérience :</strong>
+        {{ chef.experienceYears }} années
+      </p>
+
+      <p *ngIf="chef.bio">
+        <strong>Biographie :</strong>
+        {{ chef.bio }}
+      </p>
+
+      <p *ngIf="chef.signatureDish">
+        <strong>Plat signature :</strong>
+        {{ chef.signatureDish }}
+      </p>
+
+      <div class="actions">
+        <button
+          class="edit-btn"
+          [routerLink]="['/chef', chef.id, 'edit']"
+        >
+          Modifier
+        </button>
+
+        <button
+          class="delete-btn"
+          (click)="supprimerChef(chef.id)"
+        >
+          Supprimer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

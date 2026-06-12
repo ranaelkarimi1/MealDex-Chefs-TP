@@ -1,0 +1,9 @@
+<div style="width: 85%; margin: 40px auto;" *ngIf="chef$ | async as chef">
+  <h1>Modifier un chef</h1>
+
+  <app-chef-form
+    [chef]="chef"
+    (saved)="modifierChef($event)"
+    (canceled)="annuler()"
+  ></app-chef-form>
+</div>

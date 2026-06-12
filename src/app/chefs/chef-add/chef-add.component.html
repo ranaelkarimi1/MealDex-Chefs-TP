@@ -1,0 +1,8 @@
+<div style="width: 85%; margin: 40px auto;">
+  <h1>Ajouter un chef</h1>
+
+  <app-chef-form
+    (saved)="ajouterChef($event)"
+    (canceled)="annuler()"
+  ></app-chef-form>
+</div>
